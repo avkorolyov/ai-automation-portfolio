@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "project": "Competitor AI",
+  "dataset_root": "tests/data/fullscale",
+  "scenarios": [
+    {
+      "id": "FS-BE-TEXT-001",
+      "type": "positive",
+      "endpoint": "/analyze/text",
+      "data": "texts/positive/*.txt"
+    },
+    {
+      "id": "FS-BE-TEXT-002",
+      "type": "negative",
+      "endpoint": "/analyze/text",
+      "data": "texts/negative/text_too_short.txt"
+    },
+    {
+      "id": "FS-BE-IMG-001",
+      "type": "positive",
+      "endpoint": "/analyze/image",
+      "data": "../images/*.png"
+    },
+    {
+      "id": "FS-BE-IMG-002",
+      "type": "negative",
+      "endpoint": "/analyze/image",
+      "data": "images/negative/not_image.jpg"
+    },
+    {
+      "id": "FS-BE-PDF-001",
+      "type": "positive",
+      "endpoint": "/analyze/pdf",
+      "data": "../pdfs/*.pdf"
+    },
+    {
+      "id": "FS-BE-PDF-002",
+      "type": "negative",
+      "endpoint": "/analyze/pdf",
+      "data": "pdfs/negative/*.pdf"
+    },
+    {
+      "id": "FS-BE-PARSE-001",
+      "type": "positive",
+      "endpoint": "/parse/demo",
+      "data": "urls/positive_urls.txt"
+    },
+    {
+      "id": "FS-BE-PARSE-002",
+      "type": "negative",
+      "endpoint": "/parse/demo",
+      "data": "urls/negative_urls.txt"
+    },
+    {
+      "id": "FS-BE-HIST-001",
+      "type": "positive",
+      "endpoint": "/history",
+      "data": "history/history_seed.json"
+    }
+  ]
+}

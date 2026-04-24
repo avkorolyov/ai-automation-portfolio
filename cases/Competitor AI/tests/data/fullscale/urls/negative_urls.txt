@@ -1,0 +1,3 @@
+not-a-url
+http://
+https://example.invalid
