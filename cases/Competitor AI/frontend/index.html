@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Competition Monitor AI</title>
+    <link rel="icon" type="image/png" href="/frontend/brand-icon.png" />
+    <link rel="stylesheet" href="/frontend/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <img class="brand-icon" src="/frontend/brand-icon.png" alt="Competitor AI icon" />
+          <span>Competitor AI</span>
+        </div>
+        <nav class="menu">
+          <button class="menu-btn active" data-tab="textTab"><span class="menu-icon">📝</span><span>Анализ текста</span></button>
+          <button class="menu-btn" data-tab="imageTab"><span class="menu-icon">🖼️</span><span>Анализ изображения</span></button>
+          <button class="menu-btn" data-tab="pdfTab"><span class="menu-icon">📄</span><span>Анализ PDF</span></button>
+          <button class="menu-btn" data-tab="parseTab"><span class="menu-icon">🌐</span><span>Парсинг сайта</span></button>
+          <button class="menu-btn" data-tab="historyTab"><span class="menu-icon">🕘</span><span>История</span></button>
+        </nav>
+      </aside>
+
+      <section class="content">
+        <header class="page-head">
+          <h1>Мониторинг конкурентов</h1>
+          <p>AI-ассистент для анализа конкурентной среды</p>
+        </header>
+
+        <section id="textTab" class="card tab-panel">
+          <h2>Анализ текста конкурента</h2>
+          <p class="muted">Вставьте текст с сайта конкурента, из рекламы или описания продукта</p>
+
+          <label class="field-label" for="txtInput">Текст для анализа</label>
+          <div class="field-container">
+            <textarea id="txtInput" rows="8" placeholder="Вставьте текст для анализа"></textarea>
+          </div>
+
+          <button id="btnText">Проанализировать</button>
+        </section>
+
+        <section id="imageTab" class="card tab-panel hidden">
+          <h2>Анализ изображений</h2>
+          <p class="muted">Загрузите скриншот сайта, баннер или фото упаковки конкурента</p>
+
+          <div class="field-container">
+            <div id="dropZone" class="drop-zone">
+              <input id="imgFile" class="hidden-file-input" type="file" accept="image/png,image/jpeg,image/gif,image/webp" />
+              <div id="dropZonePicker" class="drop-zone-text">
+                Перетащите изображение или <button type="button" id="pickImageBtn" class="link-btn">выберите файл</button>
+              </div>
+              <div id="dropZoneSubtext" class="drop-zone-subtext">PNG, JPG, GIF, WEBP до 10MB</div>
+              <div id="imagePreviewWrap" class="image-preview-wrap hidden">
+                <button id="removeImageBtn" type="button" class="icon-btn danger image-remove-btn" title="Удалить изображение" aria-label="Удалить изображение">🗑️</button>
+                <img id="imagePreview" class="image-preview" alt="Предпросмотр изображения" />
+              </div>
+            </div>
+          </div>
+
+          <button id="btnImage">Проанализировать</button>
+        </section>
+
+        <section id="parseTab" class="card tab-panel hidden">
+          <h2>Парсинг сайта конкурента</h2>
+          <p class="muted">Укажите URL, чтобы получить краткий анализ структуры и контента</p>
+
+          <label class="field-label" for="parseUrl">Ссылка на сайт</label>
+          <div class="field-container">
+            <input id="parseUrl" placeholder="https://example.com" />
+          </div>
+
+          <button id="btnParse">Запустить парсинг</button>
+        </section>
+
+        <section id="pdfTab" class="card tab-panel hidden">
+          <h2>Анализ PDF-документа</h2>
+          <p class="muted">Загрузите PDF-файл с материалами конкурента для анализа контента</p>
+
+          <div class="field-container">
+            <div id="pdfDropZone" class="drop-zone">
+              <input id="pdfFile" class="hidden-file-input" type="file" accept="application/pdf,.pdf" />
+              <div id="pdfDropZonePicker" class="drop-zone-text">
+                Перетащите PDF или <button type="button" id="pickPdfBtn" class="link-btn">выберите файл</button>
+              </div>
+              <div id="pdfDropZoneSubtext" class="drop-zone-subtext">PDF до 20MB</div>
+              <div id="pdfPreviewWrap" class="pdf-preview-wrap hidden">
+                <button id="removePdfBtn" type="button" class="icon-btn danger pdf-remove-btn" title="Удалить PDF" aria-label="Удалить PDF">🗑️</button>
+                <div id="pdfFileName" class="pdf-file-name"></div>
+              </div>
+            </div>
+          </div>
+
+          <button id="btnPdf">Проанализировать PDF</button>
+        </section>
+
+        <section id="historyTab" class="card tab-panel hidden">
+          <div class="history-head">
+            <h2>История запросов</h2>
+            <button id="btnClearHistory" class="icon-btn danger" title="Очистить историю" aria-label="Очистить историю">🗑️</button>
+          </div>
+          <p class="muted">Кликните по карточке, чтобы открыть запрос и результат анализа</p>
+          <div id="historyList"></div>
+        </section>
+
+        <section class="card result-card hidden" id="resultCard">
+          <h2>Результаты анализа</h2>
+          <div id="output"></div>
+        </section>
+
+      </section>
+    </main>
+
+    <div id="historyModal" class="modal hidden">
+      <div class="modal-backdrop" data-close="1"></div>
+      <div class="modal-content">
+        <button id="modalClose" class="icon-btn modal-close" aria-label="Закрыть">✕</button>
+        <h3 id="modalTitle">Детали запроса</h3>
+        <div class="modal-section">
+          <h4>Запрос</h4>
+          <div id="modalRequest"></div>
+        </div>
+        <div class="modal-section">
+          <h4>Результат</h4>
+          <div id="modalResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/frontend/app.js"></script>
+  </body>
+</html>
